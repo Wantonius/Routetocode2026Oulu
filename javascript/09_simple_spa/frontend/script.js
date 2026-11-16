@@ -2,6 +2,7 @@ var mode = 0;
 
 window.onload = function() {
 	createForm();
+	getList();
 }
 
 const createForm = () => {
@@ -114,4 +115,74 @@ const getList = async () => {
 	} else {
 		console.log("Server responded with a status "+response.status+" "+response.statusText);
 	}
+}
+
+const removeItem = async (id) => {
+	const url = "/api/shpping/"+id;
+	const request = {
+		"method":"DELETE"
+	}
+	const response = await fetch(url,request);
+	if(response.ok) {
+		getList();
+	} else {
+		console.log("Server responded with a status "+response.status+" "+response.statusText);
+	}
+}
+
+const editItem = (item) => {
+	const typeInput = document.getElementById("type");
+	const countInput = document.getElementById("count");
+	const priceInput = document.getElementById("price");
+	mode = item.id;
+	const submitButton = document.getElementById("submitbutton");
+	submitButton.value = "Save";
+	typeInput.value = item.type;
+	countInput.value = item.count;
+	priceInput.value = item.price;
+}
+
+const populateTable = (list) => {
+	const root = document.getElementById("root");
+	const oldTable = document.getElementById("table");
+	if(oldTable) {
+		root.removeChild(oldTable);
+	}
+	
+	const table = document.createElement("table");
+	table.setAttribute("class","table table-striped");
+	table.setAttribute("id","table");
+
+	//headers
+	const header = document.createElement("thead");
+	const headerRow = document.createElement("tr");
+	
+	//Type header
+	const typeHeader = document.createElement("th");
+	const typeHeaderText = document.createTextNode("Type");
+	typeHeader.appendChild(typeHeaderText);
+
+	//Count header
+	const countHeader = document.createElement("th");
+	const countHeaderText = document.createTextNode("Count");
+	countHeader.appendChild(countHeaderText);
+	
+	//Price header
+	const priceHeader = document.createElement("th");
+	const priceHeaderText = document.createTextNode("Price");
+	priceHeader.appendChild(priceHeaderText);
+	
+	//Remove header
+	const removeHeader = document.createElement("th");
+	const removeHeaderText = document.createTextNode("Remove");
+	removeHeader.appendChild(removeHeaderText);
+	
+	//Edit header
+	const editHeader = document.createElement("th");
+	const editHeaderText = document.createTextNode("Edit");
+	editHeader.appendChild(editHeaderText);
+	
+	headerRow.append(typeHeader,countHeader,priceHeader,removeHeader,editHeader);
+	header.appendChild(headerRow);
+	table.appendChild(header);
 }
