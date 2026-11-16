@@ -110,7 +110,7 @@ const getList = async () => {
 	if(response.ok) {
 		const list = await response.json();
 		if(list) {
-			//populateTable(list);
+			populateTable(list);
 		}
 	} else {
 		console.log("Server responded with a status "+response.status+" "+response.statusText);
@@ -118,7 +118,7 @@ const getList = async () => {
 }
 
 const removeItem = async (id) => {
-	const url = "/api/shpping/"+id;
+	const url = "/api/shopping/"+id;
 	const request = {
 		"method":"DELETE"
 	}
@@ -185,4 +185,45 @@ const populateTable = (list) => {
 	headerRow.append(typeHeader,countHeader,priceHeader,removeHeader,editHeader);
 	header.appendChild(headerRow);
 	table.appendChild(header);
+
+	//table body
+	
+	const body = document.createElement("tbody");
+	for(let i=0;i<list.length;i++) {
+		const row = document.createElement("tr");
+		for(x in list[i]) {
+			if(x === "id") {
+				continue;
+			}
+			const column = document.createElement("td");
+			const info = document.createTextNode(list[i][x]);
+			column.appendChild(info);
+			row.appendChild(column);
+		}
+		
+		const removeColumn = document.createElement("td");
+		const removeButton = document.createElement("button");
+		removeButton.setAttribute("class","btn btn-danger");
+		const removeText = document.createTextNode("Remove");
+		removeButton.appendChild(removeText);
+		removeButton.addEventListener("click",function(e) {
+			removeItem(list[i].id);
+		})
+		removeColumn.appendChild(removeButton);
+	
+		const editColumn = document.createElement("td");
+		const editButton = document.createElement("button");
+		editButton.setAttribute("class","btn btn-primary");
+		const editText = document.createTextNode("Edit");
+		editButton.appendChild(editText);
+		editButton.addEventListener("click",function(e) {
+			editItem(list[i]);
+		})
+		editColumn.appendChild(editButton);
+		
+		row.append(removeColumn,editColumn);
+		body.appendChild(row);
+	}
+	table.appendChild(body);
+	root.appendChild(table);
 }
