@@ -22,7 +22,7 @@ const ContactList = (props:Props) => {
 		editIndex:-1
 	})
 	
-	const changeMode = (mode:string,index:number) {
+	const changeMode = (mode:string,index:number) => {
 		switch(mode) {
 			case "remove": {
 				return {

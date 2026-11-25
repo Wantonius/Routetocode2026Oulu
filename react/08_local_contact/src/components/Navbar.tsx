@@ -12,7 +12,7 @@ const Navbar = () => {
 				<li className="nav-item" style={{"marginLeft":10}}>
 					<Link className="nav-link" to="/form">Add new contact</Link>
 				</li>
-			</il>
+			</ul>
 		</nav>
 	)
 }

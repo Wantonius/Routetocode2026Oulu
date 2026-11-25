@@ -56,7 +56,7 @@ function App() {
 			<Navbar/>
 			<hr/>
 			<Routes>
-				<Route path="/" elememt={<ContactList list={state.list} removeContact={removeContact} editContact={editContact}/>}/>
+				<Route path="/" element={<ContactList list={state.list} removeContact={removeContact} editContact={editContact}/>}/>
 				<Route path="/form" element={<ContactForm addContact={addContact}/>}/>
 				<Route path="*" element={<Navigate to="/"/>}/>
 			</Routes>
