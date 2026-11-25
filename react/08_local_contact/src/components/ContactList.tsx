@@ -25,22 +25,25 @@ const ContactList = (props:Props) => {
 	const changeMode = (mode:string,index:number) => {
 		switch(mode) {
 			case "remove": {
-				return {
+				setState({
 					removeIndex:index,
 					editIndex:-1
-				}
+				})
+				return;
 			}
 			case "edit": {
-				return {
+				setState({
 					removeIndex:-1,
 					editIndex:index
-				}
+				})
+				return;
 			}
 			case "cancel": {
-				return {
+				setState({
 					removeIndex:-1,
 					editIndex:-1
-				}
+				})
+				return;
 			}
 			default:
 				return
