@@ -1,13 +1,21 @@
 import useAction from './hooks/useAction';
 import ShoppingForm from './components/ShoppingForm';
-
+import Navbar from './components/Navbar';
+import ShoppingList from './components/ShoppingList';
+import {Routes,Route,Navigate} from 'react-router';
 function App() {
   
-	const {add} = useAction()
+	const {state,add,remove,edit} = useAction()
   
 	return (
 		<>
-			<ShoppingForm add={add}/>
+			<Navbar/>
+			<hr/>
+			<Routes>
+				<Route path="/" element={<ShoppingList list={state.list} remove={remove} edit={edit}/>}/>
+				<Route path="/form" element={<ShoppingForm add={add}/>}/>
+				<Route path="*" element={<Navigate to="/"/>}/>
+			</Routes>
 		</>
 	)
 }
